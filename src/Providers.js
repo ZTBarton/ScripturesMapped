@@ -1,7 +1,8 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Wrapper as GoogleApiWrapper } from '@googlemaps/react-wrapper';
-import { URL_VOLUMES, URL_BOOKS, GOOGLE_API_KEY } from './constants.js';
+import { URL_VOLUMES, URL_BOOKS } from './constants.js';
+import GOOGLE_API_KEY from './keys.js';
 
 const AppContext = createContext(null);
 

@@ -8,5 +8,3 @@ export const INDEX_LATITUDE = 3;
 export const INDEX_LONGITUDE = 4;
 export const INDEX_PLACENAME = 2;
 export const INDEX_ID = 1;
-
-export const GOOGLE_API_KEY = "AIzaSyD32eOnjq18UWOeuZVg6TMeIraqrCC3QWM";
