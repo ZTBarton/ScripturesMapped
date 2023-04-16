@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
-function Map({ markers, seletedLocation }) {
+function Map({ markers }) {
     const mapRef = useRef(null);
     const [map, setMap] = useState(null);
 

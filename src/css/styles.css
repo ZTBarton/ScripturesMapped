@@ -152,11 +152,10 @@ li.match {
         max-width: 100%;
         min-height: 40%;
         border-right: 0px;
+        width: 100%;
     }
 
     .container {
         width: 100%;
     }
 }
-
-

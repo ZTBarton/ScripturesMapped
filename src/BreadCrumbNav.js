@@ -1,11 +1,14 @@
 import { Breadcrumbs, Typography, useTheme, Link } from "@mui/material";
+import useMediaQuery from '@mui/material/useMediaQuery';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 function BreadCrumbNav({ currentLocation, navigateTo }) {
     const theme = useTheme();
+    const collapseThreshold = useMediaQuery('(max-width: 1400px)');
+    const lowerThreshold = useMediaQuery('(max-width: 875px)');
 
   return (
-    <Breadcrumbs separator={<NavigateNextIcon sx={{color: theme.palette.secondary.main}} />}>
+    <Breadcrumbs mt={lowerThreshold ? 7 : 0} maxItems={collapseThreshold ? 2 : 4} separator={<NavigateNextIcon sx={{color: theme.palette.secondary.main}} />}>
         <Link 
             onClick={() => navigateTo({volume: null, book: null, chapter: null})} 
             sx={{color: theme.palette.secondary.main }}

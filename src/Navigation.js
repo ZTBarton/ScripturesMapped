@@ -1,12 +1,14 @@
 import { Box, Stack, Container, CircularProgress } from "@mui/material";
+import useMediaQuery from '@mui/material/useMediaQuery';
 import NextPrevButtons from "./NextPrevButtons";
 
 function Navigation({ isLoading, currentLocation, navigateTo, children }) {
+    const wideScreen = useMediaQuery('(max-width: 815px)');
     return (
     <Box
         id='scriptures'
         sx={{
-            width: 500,
+            width: wideScreen ? 500 : '100%',
             backgroundColor: 'secondary.light',
             overflow: 'scroll'
         }}

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { CircularProgress, Stack, Container } from "@mui/material";
 import { AppContext } from './Providers';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Header from './Header';
 import Navigation from './Navigation';
 import Map from './Map';
@@ -10,6 +11,7 @@ import './css/styles.css';
 
 function App() {
   const {isFetchingData, volumes, books} = useContext(AppContext);
+  const wideScreen = useMediaQuery('(max-width: 815px)');
 
   const [isLoadingContent, setIsLoadingContent] = useState(true);
   const [currentLocation, setCurrentLocation] = useState({volume: null, book: null, chapter: null});
@@ -85,7 +87,7 @@ function App() {
           >
           <CircularProgress size={60} />
         </Container> : 
-        <Stack direction='row' sx={{height: '90vh'}}>
+        <Stack direction={wideScreen ? 'column-reverse' : 'row'} sx={{height: '90vh'}}>
           <Navigation isLoading={isLoadingContent} currentLocation={currentLocation} navigateTo={setCurrentLocation} >
             {navContent}
           </Navigation>
