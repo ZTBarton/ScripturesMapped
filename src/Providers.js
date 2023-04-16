@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { URL_VOLUMES, URL_BOOKS } from './constants.js';
+import { Wrapper as GoogleApiWrapper } from '@googlemaps/react-wrapper';
+import { URL_VOLUMES, URL_BOOKS, GOOGLE_API_KEY } from './constants.js';
 
 const AppContext = createContext(null);
 
@@ -60,11 +61,13 @@ const AppProviders = ({ children }) => {
   })
   
   return (
-    <ThemeProvider theme={theme}>
-      <AppContext.Provider value={{isFetchingData, volumes, books}}>
-        {children}
-      </AppContext.Provider>
-    </ThemeProvider>
+    <GoogleApiWrapper apiKey={GOOGLE_API_KEY}>
+      <ThemeProvider theme={theme}>
+        <AppContext.Provider value={{isFetchingData, volumes, books}}>
+          {children}
+        </AppContext.Provider>
+      </ThemeProvider>
+    </GoogleApiWrapper>
   );
 }
 

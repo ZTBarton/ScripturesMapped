@@ -14,14 +14,12 @@ function App() {
   const [isLoadingContent, setIsLoadingContent] = useState(true);
   const [currentLocation, setCurrentLocation] = useState({volume: null, book: null, chapter: null});
   const [navContent, setNavContent] = useState(null);
+  const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
-    const getContent = async () => {
+    const getContent = () => {
       if (!isFetchingData) {
-        setIsLoadingContent(true);
-        const newNavContent = await getNavigatorContent(currentLocation);
-        setNavContent(newNavContent);
-        setIsLoadingContent(false);
+        getNavigatorContent(currentLocation);
       }
     };
     getContent();
@@ -45,32 +43,38 @@ function App() {
       });
       return <NavGroup headerText={volume.fullName} buttons={volumeBooks} onNavigate={setCurrentLocation} />
     });
-    console.log('getting content');
+    console.log(isLoadingContent);
     if (location.chapter !== null) {
       // get chapter html
-      requestChapterText(location.book.id, location.chapter, setNavContent);
+      requestChapterText(location.book.id, location.chapter, setNavContent, setIsLoadingContent, setMarkers);
     } else if (location.book !== null) {
       const chapterButtons = Array(location.book.numChapters).fill({}).map((chapter, i) => {
         return {
           key: i,
-          text: i,
+          text: i+1,
           location: {
             volume: location.volume,
             book: location.book,
-            chapter: i
+            chapter: i+1
           }
         }
       });
       content = <NavGroup headerText={location.book.fullName} buttons={chapterButtons} onNavigate={setCurrentLocation} />;
+      setNavContent(content)
+      setIsLoadingContent(false);
     } else if (location.volume !== null) {
       content = content[location.volume.id - 1];
+      setNavContent(content)
+      setIsLoadingContent(false);
+    } else {
+      setNavContent(content)
+      setIsLoadingContent(false);
     }
-    return content;
   };
 
   return (
     <Stack sx={{height: '100vh'}}>
-      <Header />
+      <Header currentLocation={currentLocation} navigateTo={setCurrentLocation} />
       {isFetchingData ?
         <Container sx={{
           flexGrow: 1, 
@@ -82,10 +86,10 @@ function App() {
           <CircularProgress size={60} />
         </Container> : 
         <Stack direction='row' sx={{height: '90vh'}}>
-          <Navigation>
+          <Navigation isLoading={isLoadingContent} currentLocation={currentLocation} navigateTo={setCurrentLocation} >
             {navContent}
           </Navigation>
-          <Map />
+          <Map markers={markers} />
         </Stack>}
     </Stack>
   );

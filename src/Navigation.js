@@ -1,6 +1,7 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Container, CircularProgress } from "@mui/material";
+import NextPrevButtons from "./NextPrevButtons";
 
-function Navigation({ children }) {
+function Navigation({ isLoading, currentLocation, navigateTo, children }) {
     return (
     <Box
         id='scriptures'
@@ -10,12 +11,30 @@ function Navigation({ children }) {
             overflow: 'scroll'
         }}
     >
+        {isLoading ?
+        <Container sx={{
+          flexGrow: 1, 
+          minWidth: '100%', 
+          display: 'flex', 
+          alignItems: 'center' , 
+          justifyContent: 'center',
+          height: 'inherit'
+        }}
+          >
+          <CircularProgress size={60} />
+        </Container> :
         <Stack m={2}>
             {typeof children === 'string' ? 
-                <Box dangerouslySetInnerHTML={{__html: children}}></Box> :
+                <Stack>
+                <NextPrevButtons currentLocation={currentLocation} navigateTo={navigateTo} sx={{ mb: '-5px' }} />
+                <Box 
+                dangerouslySetInnerHTML={{__html: children}}
+                ></Box>
+                <NextPrevButtons currentLocation={currentLocation} navigateTo={navigateTo} sx={{ mb: '25px', transform: 'translateY(-50px)' }} />
+                </Stack> :
                 children  
             }
-        </Stack>
+        </Stack>}
     </Box>
     );
 }
