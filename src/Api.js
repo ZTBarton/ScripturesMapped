@@ -6,6 +6,7 @@ import {
   INDEX_LATITUDE,
   INDEX_ID,
 } from "./constants";
+import ChapterStack from "./ChapterStack";
 
 const encodedScripturesUrlParameters = function (
   bookId,
@@ -32,8 +33,10 @@ const requestChapterText = (
   bookId,
   chapter,
   setContent,
-  setIsLoading,
-  setMarkers
+  setMarkers,
+  currentLocation,
+  navigateTo,
+  setAnimationDirection
 ) => {
   fetch(encodedScripturesUrlParameters(bookId, chapter))
     .then(function (response) {
@@ -65,21 +68,18 @@ const requestChapterText = (
                 }
               });
             setMarkers(markers);
-            setContent(chapterHtml);
-            setIsLoading(false);
+            setContent(<ChapterStack chapterHTML={chapterHtml} currentLocation={currentLocation} navigateTo={navigateTo} setAnimationDirection={setAnimationDirection} />);
           }
         });
       } else {
         if (typeof setContent === "function") {
           setContent(`Network failure: ${response.statusText}`);
-          setIsLoading(false);
         }
       }
     })
     .catch(function (error) {
       if (typeof setContent === "function") {
         setContent(`Error: ${error}`);
-        setIsLoading(false);
       }
     });
 };

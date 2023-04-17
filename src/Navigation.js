@@ -1,9 +1,20 @@
-import { Box, Stack, Container, CircularProgress } from "@mui/material";
+import { useEffect, useState, useRef } from "react";
+import { Box, Stack, Slide } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import NextPrevButtons from "./NextPrevButtons";
 
-function Navigation({ isLoading, currentLocation, navigateTo, children }) {
+function Navigation({currentLocation, navigateTo, content, previousContent, animationDirection }) {
   const wideScreen = useMediaQuery("(max-width: 815px)");
+  const containerRef = useRef(null);
+
+  const [triggerAnimation, setTriggerAnimation] = useState(false);
+  const [navContent, setNavContent] = useState(null);
+//   const [animationDirection, setAnimationDirection] = useState('left');
+
+  useEffect(() => {
+    setTriggerAnimation(true);
+  });
+
   return (
     <Box
       id="scriptures"
@@ -12,41 +23,43 @@ function Navigation({ isLoading, currentLocation, navigateTo, children }) {
         backgroundColor: "secondary.light",
         overflow: "scroll",
       }}
+      ref={containerRef}
     >
-      {isLoading ? (
-        <Container
-          sx={{
-            flexGrow: 1,
-            minWidth: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "inherit",
-          }}
-        >
-          <CircularProgress size={60} />
-        </Container>
-      ) : (
-        <Stack m={2}>
-          {typeof children === "string" ? (
-            <Stack>
-              <NextPrevButtons
-                currentLocation={currentLocation}
-                navigateTo={navigateTo}
-                sx={{ mb: "-5px" }}
-              />
-              <Box dangerouslySetInnerHTML={{ __html: children }}></Box>
-              <NextPrevButtons
-                currentLocation={currentLocation}
-                navigateTo={navigateTo}
-                sx={{ mb: "25px", transform: "translateY(-50px)" }}
-              />
+        <Slide appear={false} container={containerRef.current} in={!triggerAnimation} direction={animationDirection === 'left' ? 'right' : 'left'}>
+            <Stack m={2} sx={{position: 'absolute'}}>
+                {previousContent}
             </Stack>
-          ) : (
-            children
-          )}
-        </Stack>
-      )}
+        </Slide>
+        <Slide container={containerRef.current} in={triggerAnimation} direction={animationDirection}>
+            <Stack m={2} sx={{position: 'absolute'}}>
+                {content}
+            </Stack>
+        </Slide>
+
+            {/* {typeof children === "string" ? (
+                <><Slide appear={false} container={containerRef.current} in={!triggerAnimation} direction={animationDirection === 'left' ? 'right' : 'left'}>
+                      
+                  </Slide>
+                  <Slide container={containerRef.current} in={triggerAnimation} direction={animationDirection}>
+                          <Stack m={2} sx={{position: 'absolute'}}>
+                              <NextPrevButtons
+                                  currentLocation={currentLocation}
+                                  navigateTo={navigateTo}
+                                  setAnimationDirection={setAnimationDirection}
+                                  sx={{ mb: "-5px" }} />
+                              <Box dangerouslySetInnerHTML={{ __html: children }}></Box>
+                              <NextPrevButtons
+                                  currentLocation={currentLocation}
+                                  navigateTo={navigateTo}
+                                  setAnimationDirection={setAnimationDirection}
+                                  sx={{ mb: "25px", transform: "translateY(-50px)" }} />
+                          </Stack>
+                      </Slide></>
+            ) : (
+                <Stack mt={2}>
+                    {children}
+                </Stack>
+            )} */}
     </Box>
   );
 }
