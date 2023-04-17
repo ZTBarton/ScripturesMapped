@@ -68,7 +68,14 @@ const requestChapterText = (
                 }
               });
             setMarkers(markers);
-            setContent(<ChapterStack chapterHTML={chapterHtml} currentLocation={currentLocation} navigateTo={navigateTo} setAnimationDirection={setAnimationDirection} />);
+            setContent(
+              <ChapterStack
+                chapterHTML={chapterHtml}
+                currentLocation={currentLocation}
+                navigateTo={navigateTo}
+                setAnimationDirection={setAnimationDirection}
+              />
+            );
           }
         });
       } else {

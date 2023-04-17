@@ -19,9 +19,9 @@ function App() {
     chapter: null,
   });
   const [navContent, setNavContent] = useState(<Box></Box>);
-  const [markers, setMarkers] = useState([]);
   const [prevNavContent, setPrevNavContent] = useState(<Box></Box>);
-  const [animationDirection, setAnimationDirection] = useState('left');
+  const [markers, setMarkers] = useState([]);
+  const [animationType, setAnimationType] = useState("fade");
 
   useEffect(() => {
     const getContent = () => {
@@ -34,6 +34,7 @@ function App() {
 
   const getNavigatorContent = (location) => {
     setPrevNavContent(navContent);
+    // setAnimationType("fade");
     let content = volumes.map((volume) => {
       const volumeBooks = Object.entries(books)
         .filter((book) => {
@@ -68,7 +69,7 @@ function App() {
         setMarkers,
         currentLocation,
         setCurrentLocation,
-        setAnimationDirection
+        setAnimationType
       );
     } else if (location.book !== null) {
       const chapterButtons = Array(location.book.numChapters)
@@ -92,11 +93,14 @@ function App() {
           onNavigate={setCurrentLocation}
         />
       );
+      setAnimationType("fade");
       setNavContent(content);
     } else if (location.volume !== null) {
       content = content[location.volume.id - 1];
+      setAnimationType("fade");
       setNavContent(content);
     } else {
+      setAnimationType("fade");
       setNavContent(content);
     }
   };
@@ -129,7 +133,7 @@ function App() {
             navigateTo={setCurrentLocation}
             previousContent={prevNavContent}
             content={navContent}
-            animationDirection={animationDirection}
+            animationType={animationType}
           />
           <Map markers={markers} />
         </Stack>

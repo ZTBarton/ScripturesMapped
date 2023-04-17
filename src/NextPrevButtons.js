@@ -4,7 +4,12 @@ import { Button, ButtonGroup, useTheme } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
-function NextPrevButtons({ currentLocation, navigateTo, setAnimationDirection, sx }) {
+function NextPrevButtons({
+  currentLocation,
+  navigateTo,
+  setAnimationDirection,
+  sx,
+}) {
   const theme = useTheme();
   const { volumes, books } = useContext(AppContext);
 
@@ -61,16 +66,20 @@ function NextPrevButtons({ currentLocation, navigateTo, setAnimationDirection, s
       size="small"
       sx={{ alignSelf: "flex-end", color: theme.palette.primary.main, ...sx }}
     >
-      <Button onClick={() => {
-        setAnimationDirection('right')
-        navigateTo(getPreviousChapter(currentLocation));
-        }}>
+      <Button
+        onClick={() => {
+          setAnimationDirection("right");
+          navigateTo(getPreviousChapter(currentLocation));
+        }}
+      >
         <NavigateBeforeIcon />
       </Button>
-      <Button onClick={() => {
-        setAnimationDirection('left')
-        navigateTo(getNextChapter(currentLocation));
-        }}>
+      <Button
+        onClick={() => {
+          setAnimationDirection("left");
+          navigateTo(getNextChapter(currentLocation));
+        }}
+      >
         <NavigateNextIcon />
       </Button>
     </ButtonGroup>
