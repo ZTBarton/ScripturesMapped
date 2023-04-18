@@ -40,7 +40,7 @@ function Header({ currentLocation, navigateTo }) {
           }}
         >
           <Typography variant="h4" sx={{ color: "secondary.light" }}>
-            The Scriptures Mapped
+            The Scriptures, Mapped
           </Typography>
           <Typography variant="subtitle1" sx={{ color: "secondary.light" }}>
             By Zachary Barton
