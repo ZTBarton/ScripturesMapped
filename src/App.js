@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { CircularProgress, Stack, Container, Box } from "@mui/material";
 import { AppContext } from "./Providers";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Header from "./Header";
-import Navigation from "./Navigation";
-import Map from "./Map";
-import NavGroup from "./NavGroup";
-import requestChapterText from "./Api";
+import Header from "./components/Header";
+import Navigation from "./components/Navigation";
+import Map from "./components/Map";
+import NavGroup from "./components/NavGroup";
+import requestChapterText from "./utils/Api";
 import "./css/styles.css";
 
 function App() {

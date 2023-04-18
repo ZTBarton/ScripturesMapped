@@ -6,7 +6,7 @@ import {
   INDEX_LATITUDE,
   INDEX_ID,
 } from "./constants";
-import ChapterStack from "./ChapterStack";
+import ChapterStack from "../components/ChapterStack";
 
 const encodedScripturesUrlParameters = function (
   bookId,

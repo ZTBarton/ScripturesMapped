@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AppContext } from "./Providers";
+import { AppContext } from "../Providers";
 import { Button, ButtonGroup, useTheme } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
