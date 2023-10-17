@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# Scriptures Mapped - The React App for reading scriptures and spatially
+
+Built in react, with a backend api built by Dr. Steve Liddle (BYU). 
+
+----
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
