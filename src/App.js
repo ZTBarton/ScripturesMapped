@@ -1,26 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CircularProgress, Stack, Container } from "@mui/material";
+import { CircularProgress, Stack, Container, Box } from "@mui/material";
 import { AppContext } from "./Providers";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Header from "./Header";
-import Navigation from "./Navigation";
-import Map from "./Map";
-import NavGroup from "./NavGroup";
-import requestChapterText from "./Api";
+import Header from "./components/Header";
+import Navigation from "./components/Navigation";
+import Map from "./components/Map";
+import NavGroup from "./components/NavGroup";
+import requestChapterText from "./utils/Api";
 import "./css/styles.css";
 
 function App() {
   const { isFetchingData, volumes, books } = useContext(AppContext);
   const wideScreen = useMediaQuery("(max-width: 815px)");
 
-  const [isLoadingContent, setIsLoadingContent] = useState(true);
   const [currentLocation, setCurrentLocation] = useState({
     volume: null,
     book: null,
     chapter: null,
   });
-  const [navContent, setNavContent] = useState(null);
+  const [navContent, setNavContent] = useState(<Box></Box>);
+  const [prevNavContent, setPrevNavContent] = useState(<Box></Box>);
   const [markers, setMarkers] = useState([]);
+  const [animationType, setAnimationType] = useState("fade");
 
   useEffect(() => {
     const getContent = () => {
@@ -32,7 +33,8 @@ function App() {
   }, [volumes, currentLocation]);
 
   const getNavigatorContent = (location) => {
-    setIsLoadingContent(true);
+    setPrevNavContent(navContent);
+    // setAnimationType("fade");
     let content = volumes.map((volume) => {
       const volumeBooks = Object.entries(books)
         .filter((book) => {
@@ -51,21 +53,23 @@ function App() {
         });
       return (
         <NavGroup
+          id={volume.id}
           headerText={volume.fullName}
           buttons={volumeBooks}
           onNavigate={setCurrentLocation}
         />
       );
     });
-    console.log(isLoadingContent);
     if (location.chapter !== null) {
       // get chapter html
       requestChapterText(
         location.book.id,
         location.chapter,
         setNavContent,
-        setIsLoadingContent,
-        setMarkers
+        setMarkers,
+        currentLocation,
+        setCurrentLocation,
+        setAnimationType
       );
     } else if (location.book !== null) {
       const chapterButtons = Array(location.book.numChapters)
@@ -83,20 +87,21 @@ function App() {
         });
       content = (
         <NavGroup
+          id={location.book.id}
           headerText={location.book.fullName}
           buttons={chapterButtons}
           onNavigate={setCurrentLocation}
         />
       );
+      setAnimationType("fade");
       setNavContent(content);
-      setIsLoadingContent(false);
     } else if (location.volume !== null) {
       content = content[location.volume.id - 1];
+      setAnimationType("fade");
       setNavContent(content);
-      setIsLoadingContent(false);
     } else {
+      setAnimationType("fade");
       setNavContent(content);
-      setIsLoadingContent(false);
     }
   };
 
@@ -124,12 +129,12 @@ function App() {
           sx={{ height: "90vh" }}
         >
           <Navigation
-            isLoading={isLoadingContent}
             currentLocation={currentLocation}
             navigateTo={setCurrentLocation}
-          >
-            {navContent}
-          </Navigation>
+            previousContent={prevNavContent}
+            content={navContent}
+            animationType={animationType}
+          />
           <Map markers={markers} />
         </Stack>
       )}

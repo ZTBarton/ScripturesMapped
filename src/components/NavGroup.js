@@ -1,13 +1,14 @@
 import React from "react";
 import { Stack, useTheme, Grid, Button, Typography } from "@mui/material";
 
-const NavGroup = ({ headerText, buttons, onNavigate }) => {
+const NavGroup = ({ id, headerText, buttons, onNavigate }) => {
   const theme = useTheme();
 
   const gridButtons = buttons.map((button) => {
     return (
-      <Grid key={button.key} item xs={3}>
+      <Grid key={`grid-${id}-${button.key}`} item xs={3}>
         <Button
+          key={`button-${id}-${button.key}`}
           variant="contained"
           sx={{
             width: 91,
@@ -26,7 +27,7 @@ const NavGroup = ({ headerText, buttons, onNavigate }) => {
     );
   });
   return (
-    <Stack alignItems="center" spacing={2} m={2}>
+    <Stack key={`group-${id}`} alignItems="center" spacing={2} m={2}>
       <Typography color={theme.palette.primary.dark} variant="h6">
         {headerText}
       </Typography>
