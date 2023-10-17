@@ -1,3 +1,27 @@
+What I learned: 
+I have been working in React for about a year now so I decided when I started this
+project that I was going to try and do it in a way that helped me learn some new
+concepts or tools. So I decided to start the whole project over from scratch using
+Material UI components instead of copying and pasting all of my HTML and CSS over 
+from project 2.
+
+I had used MUI before but had never been very good at building layouts and tweaking 
+CSS and I had also never personally built a MUI theme or used MUI media queries for 
+responsiveness. I am so glad that I put in the time to learn it because I think I 
+have a really good grasp on things now and its a tool that I will definitely use in 
+future projects!
+
+I also redid most of the Javascript code to be more react-y and to make sure that 
+functionality was tied more closely to the component that used it. 
+
+I am super proud of the result but a little bothered because the animations are a 
+little bit twitchy. I know the reason why its twitching (the content prop in the 
+Navigation component is updating and the component's useEffect doesn't set the 
+trigger animation state to false quickly enough) but I was not able to fix it 
+completely. I was able to implement slide animations though, which I think look good 
+(besides the twitch).
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -10,12 +10,14 @@ function Navigation({ content, previousContent, animationType }) {
   const [idCount, setIdCount] = useState(0);
 
   useEffect(() => {
-    setTriggerAnimation(false);
+    if (animationType !== 'fade') {
+      setTriggerAnimation(false);
+      setTimeout(() => {
+        setTriggerAnimation(true);
+      }, 1);
+    }
     const newCount = idCount + 1;
     setIdCount(newCount);
-    setTimeout(() => {
-      setTriggerAnimation(true);
-    }, 1);
   }, [content]);
 
   return (
@@ -30,21 +32,21 @@ function Navigation({ content, previousContent, animationType }) {
     >
       {animationType === "fade" ? (
         <>
-          <Fade
+          {/* <Fade
             key={`transition-prev-${idCount}`}
             appear={false}
             container={containerRef.current}
-            in={!triggerAnimation}
+            in={false}
             timeout={500}
           >
             <Stack m={2} sx={{ position: "absolute" }}>
               {previousContent}
             </Stack>
-          </Fade>
+          </Fade> */}
           <Fade
             key={`transition-current-${idCount}`}
             container={containerRef.current}
-            in={triggerAnimation}
+            in={true}
             timeout={1000}
           >
             <Stack m={2} sx={{ position: "absolute" }}>
